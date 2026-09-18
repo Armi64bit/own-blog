@@ -6,9 +6,34 @@ import { useAuth } from "@/_core/hooks/useAuth";
 
 type Post = { id: number; title: string; excerpt: string; source: "github" | "manual"; hidden: boolean; status: "draft" | "published"; language?: string; stars?: number };
 const seed: Post[] = [
-  { id: 1, title: "Welcome to Own Blog", excerpt: "A calm place for projects, notes, and experiments.", source: "manual", hidden: false, status: "published" },
-  { id: 2, title: "own-blog", excerpt: "Personal blog with Next.js, FastAPI, GitHub sync, and email approvals.", source: "github", hidden: false, status: "draft", language: "TypeScript", stars: 0 },
-  { id: 3, title: "Private experiments", excerpt: "A synchronized repository kept off the public blog until you are ready.", source: "github", hidden: true, status: "draft", language: "Python", stars: 2 },
+  { id: 2, title: "own-blog", excerpt: "Personal blog with Next.js frontend and FastAPI automation backend", source: "github", hidden: false, status: "published", language: "TypeScript", stars: 0 },
+  { id: 3, title: "Armi64bit", excerpt: "A GitHub project from the repository collection.", source: "github", hidden: false, status: "published", stars: 1 },
+  { id: 4, title: "cat-scroll", excerpt: "A GitHub project from the repository collection.", source: "github", hidden: false, status: "published", language: "TypeScript", stars: 0 },
+  { id: 5, title: "immoOVH", excerpt: "A GitHub project from the repository collection.", source: "github", hidden: false, status: "published", language: "TypeScript", stars: 0 },
+  { id: 6, title: "AITrade", excerpt: "A GitHub project from the repository collection.", source: "github", hidden: false, status: "published", language: "TypeScript", stars: 0 },
+  { id: 7, title: "immo", excerpt: "A GitHub project from the repository collection.", source: "github", hidden: false, status: "published", language: "TypeScript", stars: 0 },
+  { id: 8, title: "cvoptimizer", excerpt: "A GitHub project from the repository collection.", source: "github", hidden: false, status: "published", language: "TypeScript", stars: 0 },
+  { id: 9, title: "lolz", excerpt: "A GitHub project from the repository collection.", source: "github", hidden: false, status: "published", language: "HTML", stars: 0 },
+  { id: 10, title: "room_reservation_system", excerpt: "A GitHub project from the repository collection.", source: "github", hidden: false, status: "published", language: "Java", stars: 0 },
+  { id: 11, title: "Room_res_sys", excerpt: "A GitHub project from the repository collection.", source: "github", hidden: false, status: "published", stars: 0 },
+  { id: 12, title: "Manajero-Andon-Visual-Management", excerpt: "A GitHub project from the repository collection.", source: "github", hidden: false, status: "published", language: "TypeScript", stars: 0 },
+  { id: 13, title: "Tektai-Devtech-4TWIN2", excerpt: "A GitHub project from the repository collection.", source: "github", hidden: false, status: "published", language: "JavaScript", stars: 0 },
+  { id: 14, title: "devops_groupe4", excerpt: "A GitHub project from the repository collection.", source: "github", hidden: false, status: "published", language: "Java", stars: 0 },
+  { id: 15, title: "UniH23", excerpt: "A GitHub project from the repository collection.", source: "github", hidden: false, status: "published", language: "SCSS", stars: 0 },
+  { id: 16, title: "socket", excerpt: "A GitHub project from the repository collection.", source: "github", hidden: false, status: "published", language: "JavaScript", stars: 0 },
+  { id: 17, title: ".net", excerpt: "A GitHub project from the repository collection.", source: "github", hidden: false, status: "published", language: "C#", stars: 0 },
+  { id: 18, title: ".net_airport", excerpt: "A GitHub project from the repository collection.", source: "github", hidden: false, status: "published", language: "C#", stars: 0 },
+  { id: 19, title: "react-atlier2", excerpt: "A GitHub project from the repository collection.", source: "github", hidden: false, status: "published", language: "JavaScript", stars: 0 },
+  { id: 20, title: "micros", excerpt: "A GitHub project from the repository collection.", source: "github", hidden: false, status: "published", language: "Java", stars: 0 },
+  { id: 21, title: "eurekaserver", excerpt: "A GitHub project from the repository collection.", source: "github", hidden: false, status: "published", language: "Java", stars: 0 },
+  { id: 22, title: "gestionSki", excerpt: "A GitHub project from the repository collection.", source: "github", hidden: false, status: "published", language: "Java", stars: 0 },
+  { id: 23, title: "etudeDeCas", excerpt: "A GitHub project from the repository collection.", source: "github", hidden: false, status: "published", language: "Java", stars: 0 },
+  { id: 24, title: "angular", excerpt: "A GitHub project from the repository collection.", source: "github", hidden: false, status: "published", language: "TypeScript", stars: 0 },
+  { id: 25, title: "stage_react", excerpt: "react learning process", source: "github", hidden: false, status: "published", language: "TypeScript", stars: 0 },
+  { id: 26, title: "Artfulio", excerpt: "pidev", source: "github", hidden: false, status: "published", language: "Java", stars: 0 },
+  { id: 27, title: "Smart_Real_Estate_Agency_2A8", excerpt: "Smart_Real_Estate_Agency_2A8", source: "github", hidden: false, status: "published", stars: 0 },
+  { id: 28, title: "eco-eware", excerpt: "environment web site", source: "github", hidden: false, status: "published", language: "HTML", stars: 0 },
+  { id: 29, title: "leagueofeveilexes", excerpt: "game", source: "github", hidden: false, status: "published", stars: 0 },
 ];
 
 export default function Home() {
