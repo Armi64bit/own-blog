@@ -1,0 +1,2 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap');
+:root{--ink:#20221f;--muted:#787d75;--paper:#f5f6f1;--line:#dfe2d9;--green:#b9e56b;--soft:#eef0e8}*{box-sizing:border-box}body{min-height:100%;margin:0;background:var(--paper);color:var(--ink);font-family:'DM Sans',sans-serif}
