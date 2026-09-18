@@ -5,6 +5,7 @@ import { Eye, EyeOff, Github, FileText, Plus, RefreshCw, Sparkles } from "lucide
 import { useAuth } from "@/_core/hooks/useAuth";
 
 type Post = { id: number; title: string; excerpt: string; source: "github" | "manual"; hidden: boolean; status: "draft" | "published"; language?: string; stars?: number };
+const BLOG_API_URL = (import.meta.env.VITE_BLOG_API_URL || "").replace(/\/$/, "");
 const seed: Post[] = [
   { id: 2, title: "own-blog", excerpt: "Personal blog with Next.js frontend and FastAPI automation backend", source: "github", hidden: false, status: "published", language: "TypeScript", stars: 0 },
   { id: 3, title: "Armi64bit", excerpt: "A GitHub project from the repository collection.", source: "github", hidden: false, status: "published", stars: 1 },
@@ -54,10 +55,20 @@ export default function Home() {
     if (!hydrated) return;
     try { window.localStorage.setItem("own-blog-dashboard-posts", JSON.stringify(posts)); } catch { /* storage is optional */ }
   }, [posts, hydrated]);
-  const toggle = (id: number) => {
+  const toggle = async (id: number) => {
     const target = posts.find((post) => post.id === id);
-    setPosts((items) => items.map((post) => post.id === id ? { ...post, hidden: !post.hidden } : post));
-    if (target && !target.hidden) setFilter("visible");
+    if (!target) return;
+    const nextHidden = !target.hidden;
+    try {
+      if (BLOG_API_URL) {
+        const response = await fetch(`${BLOG_API_URL}/api/visibility`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ slug: target.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""), hidden: nextHidden }) });
+        if (!response.ok) throw new Error("FastAPI visibility update failed");
+      }
+      setPosts((items) => items.map((post) => post.id === id ? { ...post, hidden: nextHidden } : post));
+      if (nextHidden) setFilter("visible");
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : "Could not update blog visibility");
+    }
   };
   const approve = (id: number) => setPosts((items) => items.map((post) => post.id === id ? { ...post, status: "published", hidden: false } : post));
   const add = () => setPosts((items) => [{ id: Date.now(), title: "Untitled note", excerpt: "A new draft ready for your voice.", source: "manual", hidden: false, status: "draft" }, ...items]);

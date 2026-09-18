@@ -46,3 +46,11 @@ The public repository is [github.com/Armi64bit/own-blog](https://github.com/Armi
 ## API surface
 
 `GET /api/posts`, `POST /api/posts`, `PATCH /api/posts/{id}`, `DELETE /api/posts/{id}`, `POST /api/posts/{id}/approve`, `POST /api/github/sync`, and `POST /api/webhooks/github`.
+
+## Dashboard visibility bridge
+
+The publishing desk calls `POST /api/visibility` on the FastAPI service when a post is hidden or restored. The service updates `frontend/data/visibility.ts` through the GitHub Contents API, committing the change to `main`. The Pages workflow then rebuilds the static site; hidden slugs are excluded from the public index and article routes.
+
+Set `VITE_BLOG_API_URL` in the dashboard build environment to the deployed FastAPI base URL. The FastAPI service requires `GITHUB_TOKEN`, `GITHUB_REPOSITORY=Armi64bit/own-blog`, and `GITHUB_BRANCH=main`. The token needs repository Contents read/write permission. Keep the GitHub token server-side; never expose it through a `VITE_` variable.
+
+API surface now includes `POST /api/visibility` in addition to the CRUD endpoints above.
