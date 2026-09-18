@@ -39,18 +39,21 @@ const seed: Post[] = [
 export default function Home() {
   const { user, loading } = useAuth({ redirectOnUnauthenticated: true });
   const [posts, setPosts] = useState(seed);
+  const [hydrated, setHydrated] = useState(false);
   const [filter, setFilter] = useState<"all" | "visible" | "hidden">("all");
   const [preview, setPreview] = useState(false);
   const visible = useMemo(() => posts.filter((post) => filter === "all" || (filter === "hidden" ? post.hidden : !post.hidden)), [posts, filter]);
   useEffect(() => {
     try {
       const saved = window.localStorage.getItem("own-blog-dashboard-posts");
-      if (saved) setPosts(JSON.parse(saved));
+      if (saved) setPosts(JSON.parse(saved) as Post[]);
     } catch { /* keep the generated seed if storage is unavailable */ }
+    setHydrated(true);
   }, []);
   useEffect(() => {
+    if (!hydrated) return;
     try { window.localStorage.setItem("own-blog-dashboard-posts", JSON.stringify(posts)); } catch { /* storage is optional */ }
-  }, [posts]);
+  }, [posts, hydrated]);
   const toggle = (id: number) => {
     const target = posts.find((post) => post.id === id);
     setPosts((items) => items.map((post) => post.id === id ? { ...post, hidden: !post.hidden } : post));
