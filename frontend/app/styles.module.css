@@ -26,3 +26,11 @@
 .glowCursorCanvas{position:absolute;inset:0;width:100%;height:100%;display:block;mix-blend-mode:screen;opacity:.95}
 .publicShell:has(.landingHeatMap){background:var(--paper)}
 .publicShell:has(.landingHeatMap):after{opacity:.45}
+
+/* Spotlight Card: a restrained React Bits-inspired focus layer for archive cards. */
+.spotlightCard{position:relative;overflow:hidden;background:linear-gradient(145deg,#1a1012,#10090b);padding:32px;border:1px solid var(--line);border-radius:8px;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+.spotlightCard:before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(240px circle at var(--spotlight-x,50%) var(--spotlight-y,50%),#ff405326,transparent 68%);opacity:0;transition:opacity .2s ease}
+.spotlightCard:hover{transform:translateY(-5px);border-color:#b51d35;box-shadow:0 14px 40px #ff203b22}
+.spotlightCard:hover:before{opacity:1}
+.spotlightContent{position:relative;z-index:1}
+.metaBadge{display:inline-flex;border:1px solid #6e2935;border-radius:999px;padding:4px 8px;color:#df8d96!important;background:#1b0b0f}
