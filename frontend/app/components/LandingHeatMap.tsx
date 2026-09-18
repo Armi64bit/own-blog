@@ -17,7 +17,8 @@ export default function LandingHeatMap() {
     let width = 0;
     let height = 0;
     let frame = 0;
-    let pointer = { x: 0, y: 0, targetX: 0, targetY: 0, active: true };
+    let pointer = { x: 0, y: 0, targetX: 0, targetY: 0, active: false };
+    let idleTimer: number | null = null;
     const trail: Point[] = [];
 
     const resize = () => {
@@ -35,6 +36,10 @@ export default function LandingHeatMap() {
       pointer.targetX = event.clientX;
       pointer.targetY = event.clientY;
       pointer.active = true;
+      if (idleTimer !== null) window.clearTimeout(idleTimer);
+      idleTimer = window.setTimeout(() => {
+        pointer.active = false;
+      }, 650);
     };
 
     const touchMove = (event: TouchEvent) => {
@@ -65,9 +70,9 @@ export default function LandingHeatMap() {
         const point = trail[index];
         const size = 28 + point.life * 64;
         const glow = context.createRadialGradient(point.x, point.y, 0, point.x, point.y, size);
-        glow.addColorStop(0, `rgba(255, 248, 249, ${point.life * 0.8})`);
-        glow.addColorStop(0.12, `rgba(255, 116, 137, ${point.life * 0.62})`);
-        glow.addColorStop(0.42, `rgba(246, 28, 65, ${point.life * 0.38})`);
+        glow.addColorStop(0, `rgba(255, 248, 249, ${point.life * 0.34})`);
+        glow.addColorStop(0.12, `rgba(255, 116, 137, ${point.life * 0.24})`);
+        glow.addColorStop(0.42, `rgba(246, 28, 65, ${point.life * 0.12})`);
         glow.addColorStop(1, 'rgba(94, 6, 25, 0)');
         context.fillStyle = glow;
         context.fillRect(point.x - size, point.y - size, size * 2, size * 2);
@@ -75,9 +80,9 @@ export default function LandingHeatMap() {
 
       if (pointer.active) {
         const core = context.createRadialGradient(pointer.x, pointer.y, 0, pointer.x, pointer.y, 34);
-        core.addColorStop(0, 'rgba(255, 255, 255, 1)');
-        core.addColorStop(0.08, 'rgba(255, 181, 193, 0.9)');
-        core.addColorStop(0.28, 'rgba(255, 32, 66, 0.5)');
+        core.addColorStop(0, 'rgba(255, 255, 255, 0.65)');
+        core.addColorStop(0.08, 'rgba(255, 181, 193, 0.48)');
+        core.addColorStop(0.28, 'rgba(255, 32, 66, 0.18)');
         core.addColorStop(1, 'rgba(255, 32, 66, 0)');
         context.fillStyle = core;
         context.fillRect(pointer.x - 34, pointer.y - 34, 68, 68);
@@ -103,6 +108,7 @@ export default function LandingHeatMap() {
       window.removeEventListener('mousemove', move);
       window.removeEventListener('pointermove', move);
       window.removeEventListener('touchmove', touchMove);
+      if (idleTimer !== null) window.clearTimeout(idleTimer);
       window.cancelAnimationFrame(frame);
     };
   }, []);
