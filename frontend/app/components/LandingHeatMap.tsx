@@ -17,7 +17,7 @@ export default function LandingHeatMap() {
     let width = 0;
     let height = 0;
     let frame = 0;
-    let pointer = { x: 0, y: 0, targetX: 0, targetY: 0, active: false };
+    let pointer = { x: 0, y: 0, targetX: 0, targetY: 0, active: true };
     const trail: Point[] = [];
 
     const resize = () => {
@@ -35,10 +35,6 @@ export default function LandingHeatMap() {
       pointer.targetX = event.clientX;
       pointer.targetY = event.clientY;
       pointer.active = true;
-    };
-
-    const leave = () => {
-      pointer.active = false;
     };
 
     const draw = () => {
@@ -84,15 +80,17 @@ export default function LandingHeatMap() {
     };
 
     resize();
+    pointer.x = width * 0.5;
+    pointer.y = height * 0.36;
+    pointer.targetX = pointer.x;
+    pointer.targetY = pointer.y;
     window.addEventListener('resize', resize);
     window.addEventListener('pointermove', move, { passive: true });
-    window.addEventListener('pointerout', leave, { passive: true });
     frame = window.requestAnimationFrame(draw);
 
     return () => {
       window.removeEventListener('resize', resize);
       window.removeEventListener('pointermove', move);
-      window.removeEventListener('pointerout', leave);
       window.cancelAnimationFrame(frame);
     };
   }, []);
