@@ -31,9 +31,17 @@ export default function LandingHeatMap() {
       context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
     };
 
-    const move = (event: PointerEvent) => {
+    const move = (event: MouseEvent | PointerEvent) => {
       pointer.targetX = event.clientX;
       pointer.targetY = event.clientY;
+      pointer.active = true;
+    };
+
+    const touchMove = (event: TouchEvent) => {
+      const touch = event.touches[0];
+      if (!touch) return;
+      pointer.targetX = touch.clientX;
+      pointer.targetY = touch.clientY;
       pointer.active = true;
     };
 
@@ -57,9 +65,9 @@ export default function LandingHeatMap() {
         const point = trail[index];
         const size = 28 + point.life * 64;
         const glow = context.createRadialGradient(point.x, point.y, 0, point.x, point.y, size);
-        glow.addColorStop(0, `rgba(255, 240, 242, ${point.life * 0.46})`);
-        glow.addColorStop(0.12, `rgba(255, 116, 137, ${point.life * 0.34})`);
-        glow.addColorStop(0.42, `rgba(246, 28, 65, ${point.life * 0.18})`);
+        glow.addColorStop(0, `rgba(255, 248, 249, ${point.life * 0.8})`);
+        glow.addColorStop(0.12, `rgba(255, 116, 137, ${point.life * 0.62})`);
+        glow.addColorStop(0.42, `rgba(246, 28, 65, ${point.life * 0.38})`);
         glow.addColorStop(1, 'rgba(94, 6, 25, 0)');
         context.fillStyle = glow;
         context.fillRect(point.x - size, point.y - size, size * 2, size * 2);
@@ -67,9 +75,9 @@ export default function LandingHeatMap() {
 
       if (pointer.active) {
         const core = context.createRadialGradient(pointer.x, pointer.y, 0, pointer.x, pointer.y, 34);
-        core.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
-        core.addColorStop(0.08, 'rgba(255, 181, 193, 0.72)');
-        core.addColorStop(0.28, 'rgba(255, 32, 66, 0.3)');
+        core.addColorStop(0, 'rgba(255, 255, 255, 1)');
+        core.addColorStop(0.08, 'rgba(255, 181, 193, 0.9)');
+        core.addColorStop(0.28, 'rgba(255, 32, 66, 0.5)');
         core.addColorStop(1, 'rgba(255, 32, 66, 0)');
         context.fillStyle = core;
         context.fillRect(pointer.x - 34, pointer.y - 34, 68, 68);
@@ -85,12 +93,16 @@ export default function LandingHeatMap() {
     pointer.targetX = pointer.x;
     pointer.targetY = pointer.y;
     window.addEventListener('resize', resize);
+    window.addEventListener('mousemove', move, { passive: true });
     window.addEventListener('pointermove', move, { passive: true });
+    window.addEventListener('touchmove', touchMove, { passive: true });
     frame = window.requestAnimationFrame(draw);
 
     return () => {
       window.removeEventListener('resize', resize);
+      window.removeEventListener('mousemove', move);
       window.removeEventListener('pointermove', move);
+      window.removeEventListener('touchmove', touchMove);
       window.cancelAnimationFrame(frame);
     };
   }, []);
